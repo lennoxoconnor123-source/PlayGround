@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101114">
+  <link rel="icon" href="data:,">
+  <title>OVERDRIVE — World Racing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app" id="app">
+    <aside class="sidebar">
+      <a class="brand" href="#home" aria-label="Overdrive home"><span class="brand-mark">//</span><span>OVER<span>DRIVE</span><small>WORLD RACING</small></span></a>
+      <div class="side-label">MAIN MENU</div>
+      <nav class="nav">
+        <button class="nav-item active" data-view="home"><span class="nav-icon">◈</span> Race <span class="nav-arrow">›</span></button>
+        <button class="nav-item" data-view="locations"><span class="nav-icon">◎</span> Locations <span class="nav-arrow">›</span></button>
+        <button class="nav-item" data-view="garage"><span class="nav-icon">▱</span> Garage <span class="nav-arrow">›</span></button>
+      </nav>
+      <div class="side-bottom"><div class="side-online"><i></i> SYSTEM ONLINE</div><div class="side-version">OVERDRIVE <span>v1.0</span></div></div>
+    </aside>
+    <div class="main-wrap">
+      <header class="topbar"><div class="breadcrumb">WORLD SERIES <span>/</span> <strong id="crumb">RACE</strong></div><div class="top-right"><span class="edition">THE ROAD IS YOURS</span><span class="divider"></span><span class="profile-icon">✦</span><span class="profile">PLAYER 01 <small>ROOKIE DRIVER</small></span></div></header>
+      <main class="content">
+        <div class="page-heading"><div><div class="eyebrow"><span></span> WORLD SERIES / SINGLE PLAYER</div><h1>READY TO <em>RACE?</em></h1><p>Pick your destination. Choose your ride. Own the road.</p></div><div class="heading-index">01 <span>/ 03</span></div></div>
+        <div class="dashboard">
+          <div class="left-column">
+            <section class="hero"><div class="hero-image"></div><div class="hero-shade"></div><div class="hero-content"><div class="hero-kicker"><span>✦</span> THE WORLD SERIES</div><h2>NO LIMITS.<br><em>NO BRAKES.</em></h2><p>11 racers. One finish line.<br>Make every second count.</p><div class="hero-bottom"><span class="red-line"></span> YOUR NEXT RACE STARTS HERE</div></div><div class="hero-tag"><b>01</b><span>THE<br>WORLD<br>IS YOURS</span></div></section>
+            <section class="destinations"><div class="section-title"><div><div class="eyebrow muted">FIND YOUR NEXT RACE</div><h3>CHOOSE YOUR <em>LOCATION</em></h3></div><button class="text-button" id="allLocations">VIEW ALL LOCATIONS <span>↗</span></button></div><div class="location-grid" id="featuredLocations"></div></section>
+          </div>
+          <aside class="setup"><div class="setup-top"><div><div class="eyebrow muted">YOUR RACE</div><h3>RACE <em>SETUP</em></h3></div><span class="setup-num">01—03</span></div><div class="setup-line"></div>
+            <div class="setup-section"><div class="setup-label"><span>01 / LOCATION</span><button class="change" id="changeLocation">CHANGE ↗</button></div><div class="selected-location"><div class="pin">⌖</div><div><strong id="selectedLocation">TOKYO</strong><small id="selectedCountry">JAPAN</small></div><span class="selected-flag" id="selectedFlag">🇯🇵</span></div></div>
+            <div class="setup-section car-section"><div class="setup-label"><span>02 / YOUR CAR</span><button class="change" id="changeCar">CHANGE ↗</button></div><div class="car-image"><div class="car-class" id="selectedClass">SUPERCAR</div></div><div class="car-name" id="selectedCar">BUGATTI CHIRON</div><div class="car-sub">YOUR SELECTED RIDE <span>◆ ◆ ◆ ◆ ◇</span></div><div class="stat"><span>SPEED</span><div><i id="speedBar"></i></div><b id="speedStat">95</b></div><div class="stat"><span>HANDLING</span><div><i id="handlingBar"></i></div><b id="handlingStat">78</b></div></div>
+            <div class="race-meta"><div><span>RACE TYPE</span><strong>3-LAP WORLD SPRINT</strong></div><div><span>GRID</span><strong>11 RACERS</strong></div></div><p class="mechanic-tip">OVERDRIVE: Charge by driving fast or passing close to rivals. Press SPACE at 35% to boost.</p><button class="start-button" id="startRace"><span>START RACE</span><b>↗</b></button><div class="setup-foot">BUCKLE UP. IT'S GO TIME. <span>///</span></div>
+          </aside>
+        </div>
+        <footer><span>© 2026 OVERDRIVE RACING</span><span>BUILT FOR THE DRIVE <b>///</b></span></footer>
+      </main>
+    </div>
+  </div>
+  <div class="modal hidden" id="selectionModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-panel"><div class="modal-header"><div><div class="eyebrow"><span></span> WORLD SERIES</div><h2 id="modalTitle">CHOOSE YOUR <em>LOCATION</em></h2><p id="modalSubtitle">The world is waiting. Pick your next destination.</p></div><button class="close-modal" id="closeModal" aria-label="Close">×</button></div><div class="modal-filters" id="modalFilters"></div><div class="modal-grid" id="modalGrid"></div></div></div>
+  <div class="race-screen hidden" id="raceScreen"><canvas id="raceCanvas"></canvas><div class="race-hud"><div class="hud-top"><div class="hud-brand"><span>//</span> OVERDRIVE <small>WORLD SERIES</small></div><div class="hud-location" id="hudLocation">TOKYO <small>WORLD SPRINT</small></div><button class="exit-race" id="exitRace">✕ <span>EXIT RACE</span></button></div><div class="hud-data"><div class="hud-box"><small>POSITION</small><strong><span id="hudPosition">11</span><em> / 11</em></strong></div><div class="hud-box"><small>PROGRESS</small><strong id="hudProgress">0<em>%</em></strong></div><div class="hud-box"><small>TIME</small><strong class="hud-time" id="hudTime">00:00</strong></div></div><div class="race-message" id="raceMessage">GO!</div><div class="hud-bottom"><div class="boost-panel"><small>OVERDRIVE <span>SPACE</span></small><div class="boost-track"><i id="boostBar"></i></div><p>CHARGE UP. UNLEASH THE BOOST.</p></div><div class="speed-panel"><strong id="hudSpeed">0</strong><span>KM/H</span></div></div><div class="control-tip">← → STEER <span>↑ ACCELERATE</span> <span>↓ BRAKE</span> <span>SPACE OVERDRIVE</span></div></div><div class="touch-controls"><div><button data-key="left" aria-label="Steer left">◀</button><button data-key="right" aria-label="Steer right">▶</button></div><div><button data-key="down" aria-label="Brake">BRAKE</button><button data-key="boost" class="touch-boost" aria-label="Overdrive">BOOST</button><button data-key="up" aria-label="Accelerate">GAS</button></div></div></div>
+  <div class="modal hidden result-modal" id="resultModal"><div class="result-panel"><div class="eyebrow"><span></span> RACE COMPLETE</div><h2 id="resultTitle">FINISH LINE.</h2><p id="resultText"></p><div class="result-actions"><button class="secondary-button" id="backToMenu">RACE SETUP</button><button class="start-button" id="raceAgain">RACE AGAIN <b>↗</b></button></div></div></div>
+  <script src="game.js"></script><script src="app.js"></script>
+</body>
+</html>
