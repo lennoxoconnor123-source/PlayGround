@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#080b0f" />
+  <title>OVERDRIVE — World Tour</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main id="game-shell">
+    <canvas id="game" aria-label="Overdrive racing game"></canvas>
+    <div class="vignette"></div>
+    <header class="topbar" id="topbar">
+      <button class="brand" id="home-button" aria-label="Return to menu"><span class="brand-mark">O</span><span>OVER<span class="brand-hot">DRIVE</span><small>WORLD TOUR</small></span></button>
+      <div class="top-center"><span class="live-dot"></span><span id="top-location">WORLD TOUR SERIES</span></div>
+      <button class="sound-button" id="sound-button" aria-label="Toggle sound">♫ <span>SOUND ON</span></button>
+    </header>
+    <section id="menu-screen" class="screen menu-screen">
+      <div class="menu-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span> THE WORLD IS YOUR CIRCUIT</p>
+        <h1>CHASE<br><span>THE</span> LIMIT<span class="period">.</span></h1>
+        <p class="intro">Eleven drivers. One road to glory.<br>Choose your destination and leave your mark.</p>
+        <button id="start-button" class="primary-button">START YOUR TOUR <span>↗</span></button>
+        <div class="menu-stats"><span><b>13</b> DESTINATIONS</span><i></i><span><b>20</b> ICONIC CARS</span><i></i><span><b>11</b> RACERS</span></div>
+      </div>
+      <div class="menu-bottom"><span>01 — 13</span><span>BUILT FOR THE BOLD</span><span>W / A / S / D TO DRIVE</span></div>
+    </section>
+    <section id="location-screen" class="screen selection-screen hidden">
+      <div class="selection-heading"><div><p class="eyebrow"><span class="eyebrow-line"></span> WORLD TOUR · STEP 01</p><h2>CHOOSE YOUR<br><span>PLAYGROUND.</span></h2></div><div class="heading-note">13 DESTINATIONS<br><span>Every road tells a story.</span></div></div>
+      <div id="location-grid" class="location-grid"></div>
+      <div class="selection-footer"><button class="text-button back-button" data-back="menu">← BACK</button><span>SELECT A DESTINATION TO CONTINUE</span></div>
+    </section>
+    <section id="car-screen" class="screen selection-screen car-screen hidden">
+      <div class="selection-heading"><div><p class="eyebrow"><span class="eyebrow-line"></span> WORLD TOUR · STEP 02</p><h2>PICK YOUR<br><span>WEAPON.</span></h2></div><div class="heading-note" id="selected-location-note">TOKYO, JAPAN<br><span>11 racers · 3 laps</span></div></div>
+      <div id="car-groups" class="car-groups"></div>
+      <div class="selection-footer"><button class="text-button back-button" data-back="locations">← DESTINATIONS</button><button id="race-button" class="primary-button compact">TAKE THE GRID <span>↗</span></button></div>
+    </section>
+    <section id="pause-screen" class="screen pause-screen hidden"><p class="eyebrow"><span class="eyebrow-line"></span> TAKE A BREATHER</p><h2>RACE<br><span>PAUSED.</span></h2><button id="resume-button" class="primary-button">BACK TO THE ROAD <span>↗</span></button><button id="restart-button" class="text-button">RESTART RACE</button><button id="pause-menu-button" class="text-button">QUIT TO MENU</button></section>
+    <section id="finish-screen" class="screen finish-screen hidden"><p class="eyebrow"><span class="eyebrow-line"></span> WORLD TOUR · RACE COMPLETE</p><h2 id="finish-title">NICE<br><span>DRIVE.</span></h2><p id="finish-copy">You crossed the line.</p><div class="finish-actions"><button id="again-button" class="primary-button">RACE AGAIN <span>↗</span></button><button id="next-race-button" class="text-button">NEXT DESTINATION →</button><button id="finish-menu-button" class="text-button">MAIN MENU</button></div></section>
+    <div id="race-hud" class="race-hud hidden">
+      <div class="hud-left"><div class="position-card"><strong id="position">01</strong><span>POSITION</span><small>/ 11</small></div><div class="lap-card"><span>LAP</span><strong id="lap">1<span> / 3</span></strong><div class="lap-progress"><i id="lap-progress"></i></div></div></div>
+      <div class="race-title"><span id="race-city">TOKYO</span><small>WORLD TOUR · CIRCUIT</small></div>
+      <div class="hud-right"><div class="speed-card"><strong id="speed">000</strong><span>KM/H</span></div><button id="pause-button" class="pause-button" aria-label="Pause race">Ⅱ</button></div>
+      <div class="nitro-wrap"><span>NITRO</span><div class="nitro-track"><i id="nitro-bar"></i></div><small>SPACE / SHIFT</small></div>
+      <div class="race-message" id="race-message"></div>
+      <div class="touch-controls" id="touch-controls"><button data-control="left" aria-label="Steer left">‹</button><div class="touch-right"><button data-control="nitro" aria-label="Nitro">⚡</button><button data-control="right" aria-label="Steer right">›</button></div></div>
+    </div>
+    <div id="countdown" class="countdown hidden"></div>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>

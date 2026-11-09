@@ -1,0 +1,9 @@
+{
+  "name": "overdrive-world-tour",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A 2D perspective racing game built with canvas.",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
