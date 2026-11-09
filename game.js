@@ -80,7 +80,8 @@
 
     _loop(timestamp) {
       if (!this.running) return;
-      const dt = this.lastFrame ? Math.min((timestamp - this.lastFrame) / 1000, 0.05) : 0;
+      // Keep simulation time aligned with real time on slower devices, while capping long tab-suspension gaps.
+      const dt = this.lastFrame ? Math.min((timestamp - this.lastFrame) / 1000, 0.25) : 0;
       this.lastFrame = timestamp;
       this._resize();
       if (dt) this._step(dt);
@@ -112,7 +113,7 @@
       const steering = (this.keys.right ? 1 : 0) - (this.keys.left ? 1 : 0);
       this.x += steering * (0.95 + handling * 0.65) * dt * clamp(this.speed / 85, 0.15, 1);
       // Curves gently push the car outward; steering matters even on an empty road.
-      this.x -= this._curveStrength(this.distance) * dt * (this.speed / top) * 0.22;
+      this.x -= this._curveStrength(this.distance) * dt * (this.speed / top) * 0.10;
       this.x = clamp(this.x, -1.42, 1.42);
       if (Math.abs(this.x) > 0.94) this.speed = Math.max(40, this.speed - 75 * dt);
       this.distance += this.speed * dt;
@@ -253,7 +254,7 @@
     }
 
     _drawRoad(p) {
-      const ctx = this.ctx, w = this.w, n = 120;
+      const ctx = this.ctx, w = this.w, n = 72;
       const point = t => this._road(VIEW * (1 - t) * (1 - t));
       for (let i = 0; i < n; i++) {
         const t0 = i / n, t1 = (i + 1) / n;
