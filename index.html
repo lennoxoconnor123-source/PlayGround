@@ -1,0 +1,27 @@
+function path(points){ctx.beginPath();points.forEach(([x,y],i)=>i?ctx.lineTo(x*W,y*H):ctx.moveTo(x*W,y*H));ctx.closePath()}
+function draw(){ctx.clearRect(0,0,W,H);let bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,'#164351');bg.addColorStop(.5,'#153c49');bg.addColorStop(1,'#0b2b3d');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+// distant sea and storm
+ctx.fillStyle='#061d2b';ctx.fillRect(0,0,W,H*.115);ctx.fillStyle='#267082';ctx.globalAlpha=.3;for(let i=0;i<20;i++){let x=((i*103+performance.now()*.012)%W);ctx.fillRect(x,H*.045+Math.sin(i+performance.now()*.001)*5,50,2)}ctx.globalAlpha=1;
+// pitch
+let l=W*.065,r=W*.95,t=H*.105,b=H*.9;ctx.fillStyle='#154c50';ctx.fillRect(l,t,r-l,b-t);for(let i=0;i<8;i++){ctx.fillStyle=i%2?'#1a5856':'#1b6058';ctx.fillRect(l+(r-l)*i/8,t,(r-l)/8,b-t)}ctx.strokeStyle='#a5e8d677';ctx.lineWidth=1.5;ctx.strokeRect(l,t,r-l,b-t);ctx.beginPath();ctx.moveTo(W*.5,t);ctx.lineTo(W*.5,b);ctx.stroke();ctx.beginPath();ctx.ellipse(W*.5,H*.502,W*.105,H*.17,0,0,Math.PI*2);ctx.stroke();ctx.fillStyle='#cfffff91';ctx.beginPath();ctx.arc(W*.5,H*.5,3,0,Math.PI*2);ctx.fill();
+// penalty boxes and goal area
+ctx.strokeRect(l,t+(b-t)*.28,(r-l)*.14,(b-t)*.44);ctx.strokeRect(r-(r-l)*.14,t+(b-t)*.28,(r-l)*.14,(b-t)*.44);ctx.strokeRect(l,t+(b-t)*.38,(r-l)*.055,(b-t)*.24);ctx.strokeRect(r-(r-l)*.055,t+(b-t)*.38,(r-l)*.055,(b-t)*.24);
+// perimeter seawalls
+ctx.fillStyle='#102d3a';ctx.fillRect(l-4,t-7,r-l+8,7);ctx.fillRect(l-4,b,r-l+8,7);for(let i=0;i<24;i++){let x=l+i*(r-l)/24;ctx.fillStyle=i%2?'#4ed5d0':'#75e7d8';ctx.globalAlpha=.3;ctx.fillRect(x,t-6,16,2);ctx.fillRect(x,b+3,16,2)}ctx.globalAlpha=1;
+// moving storm gate over goal mouth
+let gy=gateY*H;ctx.save();ctx.shadowBlur=15;ctx.shadowColor='#65fff0';ctx.fillStyle='#55f1e4';ctx.fillRect(r-3,t+(b-t)*.5-H*.145,7,H*.5-H*.145);ctx.fillRect(r-3,gy-H*.085,12,H*.17);ctx.restore();ctx.strokeStyle='#e3fffc';ctx.lineWidth=4;ctx.strokeRect(r-8,H*.5-H*.145,16,H*.29);ctx.fillStyle='#d3ffff';ctx.font=`${Math.max(9,W*.013)}px system-ui`;ctx.textAlign='center';ctx.fillText('STORM GATE',r-22,t+H*.5-H*.16);
+// goals and water decorations
+ctx.fillStyle='#092634';ctx.fillRect(l-10,H*.5-H*.12,10,H*.24);ctx.fillRect(r,H*.5-H*.12,10,H*.24);ctx.strokeStyle='#c9f8ff66';ctx.lineWidth=1;for(let y=-.1;y<=.1;y+=.04){ctx.beginPath();ctx.moveTo(r,H*(.5+y));ctx.lineTo(r+10,H*(.5+y));ctx.stroke()}
+// floating salt spray flecks
+for(let i=0;i<18;i++){let x=(i*127+performance.now()*.006*(i%2?1:-1))%W,y=H*(.15+(i*37%70)/100);ctx.fillStyle='#d6fffc';ctx.globalAlpha=.18;ctx.fillRect(x,y,2,2)}ctx.globalAlpha=1;
+// keeper
+playerDraw(keeper.x,keeper.y,'#ffb85b','KEEPER',.022);playerDraw(rival.x,rival.y,'#ff6e78','RIVAL',.024);playerDraw(player.x,player.y,'#52f0dd','YOU',.025);
+// ball
+let bx=ball.x*W,by=ball.y*H,br=Math.max(5,W*.011);ctx.save();ctx.shadowColor='#fff';ctx.shadowBlur=ball.spin?18:8;ctx.fillStyle='#f9ffff';ctx.beginPath();ctx.arc(bx,by,br,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;ctx.strokeStyle='#40777a';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(bx-br*.7,by-br*.5);ctx.lineTo(bx+br*.7,by+br*.5);ctx.moveTo(bx+br*.6,by-br*.6);ctx.lineTo(bx-br*.5,by+br*.65);ctx.stroke();ctx.restore();
+for(const p of particles){ctx.globalAlpha=clamp(p.life/.4,0,1);ctx.fillStyle=p.c;for(let i=0;i<p.n;i++){let a=i*2.4+p.life*8,rr=(.4-p.life)*W*.2+Math.sin(i*2)*4;ctx.beginPath();ctx.arc(p.x*W+Math.cos(a)*rr,p.y*H+Math.sin(a)*rr,rand(1,3),0,Math.PI*2);ctx.fill()}}ctx.globalAlpha=1;
+// tide charge feedback
+if(keys.tide&&ball.owner==='you'){ctx.strokeStyle='#86fff0';ctx.lineWidth=2;ctx.globalAlpha=.55+.3*Math.sin(performance.now()*.02);ctx.beginPath();ctx.arc(player.x*W,player.y*H,player.r*W*(1.8+meter/85),0,Math.PI*2);ctx.stroke();ctx.globalAlpha=1}
+}
+function playerDraw(x,y,color,label,radius){const px=x*W,py=y*H,r=radius*W;ctx.save();ctx.fillStyle='#00192388';ctx.beginPath();ctx.ellipse(px+2,py+r*.72,r*1.1,r*.48,0,0,Math.PI*2);ctx.fill();ctx.shadowColor=color;ctx.shadowBlur=12;ctx.fillStyle=color;ctx.beginPath();ctx.arc(px,py,r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;ctx.fillStyle='#eaffff';ctx.beginPath();ctx.arc(px,py-r*.1,r*.36,0,Math.PI*2);ctx.fill();ctx.fillStyle='#031d2c';ctx.font=`900 ${Math.max(8,W*.011)}px system-ui`;ctx.textAlign='center';ctx.fillText(label,px,py+r+13);ctx.restore()}
+function frame(ts){let dt=Math.min(.05,(ts-last)/1000||0);last=ts;if(state==='playing')update(dt);draw();requestAnimationFrame(frame)}requestAnimationFrame(frame);
+</script></body></html>
